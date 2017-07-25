@@ -16,22 +16,24 @@ cook_book_example = {
     {'ingridient_name': 'лук', 'quantity': 1, 'measure': 'шт.'}
     ]
 }
-# Вывод словаря сформированного из фаила
+
 def print_dish(dictionary):
+  """Выводит словарь сформированный из фаила, аргумент - (выводимый словарь)"""
   for key, value in dictionary.items():
-    print(key, end = ':\n')
+    #print(key, end = ':\n')
+    print('{}:'.format(key))
     for dic in value:
       print(dic)
 
-# Конвертируем элемент списка в integer
-def integer_quantity(list):
-  for value in range(len(list)):
-    if list[value].isdigit() == True:
-      list.insert(value, int(list.pop(value)))
-  return list
+#def integer_quantity(list):
+#  """Конвертирует элемент списка в integer, аргумент - (исходный список)"""
+#  for value in range(len(list)):
+#    if list[value].isdigit() == True:
+#      list.insert(value, int(list.pop(value)))
+#  return list
 
-# Заполняем словарь блюд по данным из фаила data_file.txt
 def cook_book_complite():
+  """Заполняет словарь блюд по данным из фаила data_file.txt"""
   with open('data_file.txt', encoding = 'utf-8') as file:
     cook_book = dict() # Словарь блюд
 
@@ -49,7 +51,7 @@ def cook_book_complite():
         ingridient_str = file.readline().strip()
         ingridient_str = ingridient_str.lower()
         ingridient_str = ingridient_str.split(' | ')
-        ingridient_str = integer_quantity(ingridient_str)
+        #ingridient_str = integer_quantity(ingridient_str)
 
         #print(ingridient_str) # Отладочный принт
 
@@ -59,6 +61,7 @@ def cook_book_complite():
 
         #print(dictionary_ingridient)# Отладочный принт
 
+        dictionary_ingridient['quantity'] = int(dictionary_ingridient['quantity'])
         list_dictionary_ingridient.append(dictionary_ingridient)
 
         #print(list_dictionary_ingridient)# Отладочный принт
@@ -87,15 +90,15 @@ def get_shop_list_by_dishes(dishes, person_count):
       return shop_list
 
 def print_shop_list(shop_list):
-      for shop_list_item in shop_list.values():
-        print('{} {} {}'.format(shop_list_item['ingridient_name'], shop_list_item['quantity'], 
+	for shop_list_item in shop_list.values():
+		print('{} {} {}'.format(shop_list_item['ingridient_name'], shop_list_item['quantity'], 
                                 shop_list_item['measure']))
 
 def create_shop_list():
-      person_count = int(input('Введите количество человек: '))
-      dishes = input('Введите блюда в расчете на одного человека (через запятую): ') \
+	person_count = int(input('Введите количество человек: '))
+	dishes = input('Введите блюда в расчете на одного человека (через запятую): ') \
         .lower().split(', ')
-      shop_list = get_shop_list_by_dishes(dishes, person_count)
-      print_shop_list(shop_list)
+	shop_list = get_shop_list_by_dishes(dishes, person_count)
+	print_shop_list(shop_list)
 
 create_shop_list()
